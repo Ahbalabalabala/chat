@@ -1,0 +1,41 @@
+<template>
+  <div class="follow">
+    <van-nav-bar :left-text="title" left-arrow>
+      <template #right>
+        <van-icon name="user-circle-o" size="20" />
+      </template>
+    </van-nav-bar>
+    <div class="navigation">
+      <div @click="title = '好友'">
+        <router-link to="/follow/companion" tag="div">好友</router-link>
+      </div>
+      <div @click="title = '关注'">
+        <router-link to="/follow/like" tag="div">关注</router-link>
+      </div>
+      <div @click="title = '群组'">
+        <router-link to="/follow/group" tag="div">群组</router-link>
+      </div>
+      <div @click="title = '聊天室'">
+        <router-link to="/follow/broadcast" tag="div">聊天室</router-link>
+      </div>
+    </div>
+    <router-view />
+  </div>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      title: "好友",
+    };
+  },
+  components: {},
+};
+</script>
+<style lang="scss" scoped>
+.navigation{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+</style>
