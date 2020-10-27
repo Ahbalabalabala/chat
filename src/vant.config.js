@@ -1,6 +1,6 @@
-import {Icon,Button,Field,CellGroup,Search,NavBar} from 'vant'
+import {Icon,Button,Field,CellGroup,Search,NavBar,Toast} from 'vant'
 
-const vants = [Icon,Button,Field,CellGroup,Search,NavBar]
+const vants = [Icon,Button,Field,CellGroup,Search,NavBar,Toast]
 
 export default {
     /**

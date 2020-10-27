@@ -16,7 +16,7 @@
           :class="{ text: focus == 0 }"
         />
       </div>
-      <div class="text-box" v-show="change">
+      <div class="text-box" v-show="isRegister">
         <van-field
           v-model="name"
           class="user"
@@ -52,17 +52,23 @@
           :class="{ text: focus == 3 }"
         />
       </div>
-      <div class="btn">
-        <van-button type="primary" round size="large"
-          >{{ title }}账号</van-button
+      <div class="btn" v-show="!isRegister">
+        <van-button type="primary" round size="large" @click="toLoginUser"
+          >登录账号</van-button
         >
       </div>
-      <span class="change" @click="change = !change">账号注册/登录</span>
+      <div class="btn" v-show="isRegister">
+        <van-button type="primary" round size="large" @click="toRegisterUser"
+          >注册账号</van-button
+        >
+      </div>
+      <span class="change" @click="changeType">账号{{ replace }}</span>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions,  } from "vuex";
 export default {
   data() {
     return {
@@ -71,12 +77,22 @@ export default {
       name: "",
       eye: true,
       change: false,
-      focus:null,
+      focus: null,
     };
   },
   computed: {
+    isRegister() {
+      return this.$store.state.login.isRegister;
+    },
     title() {
-      if (this.change) {
+      if (this.$store.state.isRegister) {
+        return "注册";
+      } else {
+        return "登录";
+      }
+    },
+    replace() {
+      if (!this.$store.state.isRegister) {
         return "注册";
       } else {
         return "登录";
@@ -84,8 +100,42 @@ export default {
     },
   },
   methods: {
+    ...mapActions(["onLoginUser", "onRegisterUser", "onRegisterFlag"]),
+    changeType(){
+      this.onRegisterFlag(!this.isRegister)
+    },
     back() {
-      this.$router.push({path:"/nearby"})
+      this.$router.push({ path: "/nearby" });
+    },
+    //登录
+    toLoginUser() {
+      if (this.value && this.password) {
+        this.onLoginUser({
+          username: this.value.toLowerCase(),
+          password: this.password,
+        }).then(this.loginSuccess);
+      }
+    },
+    //注册
+    toRegisterUser() {
+      if (this.value && this.password && this.name) {
+        this.onRegisterUser({
+          username: this.value.toLowerCase(),
+          password: this.password,
+          nickname: this.name.toLowerCase(),
+        });
+      }
+      // this.change=false
+    },
+    loginSuccess(token) {
+      // 登陆成功后
+      // 将 用户名 与 token 保存到 locationStorage 中,实现自动登录
+      // console.log(token, this.value)
+      let userInfo = {
+        username: this.value,
+        token,
+      };
+      localStorage.setItem("userInfo", JSON.stringify(userInfo));
     },
   },
 };

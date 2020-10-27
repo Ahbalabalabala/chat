@@ -1,6 +1,6 @@
 <template>
   <div class="follow">
-    <van-nav-bar :left-text="title" left-arrow>
+    <van-nav-bar :left-text="'早上哈'" left-arrow>
       <template #right>
         <van-icon name="user-circle-o" size="20" />
       </template>
@@ -26,8 +26,13 @@
 export default {
   data() {
     return {
-      title: "好友",
+      // title: "好友",
     };
+  },
+  computed:{
+    // aaa(){
+    //   return this.$store.state.title
+    // }
   },
   components: {},
 };

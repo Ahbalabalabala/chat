@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import actions from './actions'
+
+import login from "./login";
+import my from "./my";
+import chat from "./chat";
 
 Vue.use(Vuex)
 
@@ -9,7 +12,11 @@ export default new Vuex.Store({
   },
   mutations: {
   },
-  actions,
+  actions:{
+  },
   modules: {
+    login,
+    my,
+    chat,
   }
 })

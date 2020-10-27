@@ -3,27 +3,27 @@
     <div class="news">
       <div class="news-title">消息</div>
       <div class="news-friends">
-        <van-icon color="#000" size="25px" name="friends" />
+        <router-link to="/follow">
+          <van-icon color="#000" size="25px" name="friends" />
+        </router-link>
       </div>
     </div>
     <div class="friends">
-      <van-search
-        shape="round"
-        background="#fff"
-        placeholder="搜索"
-      />
-      <div class="friends-list">
-        <div class="friends-portrait">
-          <img src="../assets/logo.png" alt="" />
+      <van-search shape="round" background="#fff" placeholder="搜索" />
+      <router-link to="chat/id" tag="div">
+        <div class="friends-list">
+          <div class="friends-portrait">
+            <img src="../../assets/logo.png" alt="" />
+          </div>
+          <div class="friends-information">
+            <div class="friends-name">陌陌</div>
+            <div class="friends-last">你好吗</div>
+          </div>
+          <div class="friends-operation">
+            <van-icon class="operation-ico" color="#ccc" name="weapp-nav" />
+          </div>
         </div>
-        <div class="friends-information">
-          <div class="friends-name">陌陌</div>
-          <div class="friends-last">你好吗</div>
-        </div>
-        <div class="friends-operation">
-          <van-icon class="operation-ico" color="#ccc" name="weapp-nav" />
-        </div>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>

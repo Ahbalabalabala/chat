@@ -35,36 +35,13 @@
       </div>
     </div>
     <div class="purpose">
-      <div class="purpose-list">
-        <van-icon name="setting-o" class="purpose-left-ico" />
-        <span class="purpose-name">守护</span>
-        <van-icon name="arrow" class="purpose-right-ico" />
-      </div>
-      <div class="purpose-list">
-        <van-icon name="setting-o" class="purpose-left-ico" />
-        <span class="purpose-name">邀请有奖</span>
-        <van-icon name="arrow" class="purpose-right-ico" />
-      </div>
-      <div class="purpose-list">
-        <van-icon name="setting-o" class="purpose-left-ico" />
-        <span class="purpose-name">我的动态</span>
-        <van-icon name="arrow" class="purpose-right-ico" />
-      </div>
-      <div class="purpose-list">
-        <van-icon name="setting-o" class="purpose-left-ico" />
-        <span class="purpose-name">我的等级</span>
-        <van-icon name="arrow" class="purpose-right-ico" />
-      </div>
-      <div class="purpose-list">
-        <van-icon name="setting-o" class="purpose-left-ico" />
-        <span class="purpose-name">在线客服</span>
-        <van-icon name="arrow" class="purpose-right-ico" />
-      </div>
-      <div class="purpose-list">
-        <van-icon name="setting-o" class="purpose-left-ico" />
-        <span class="purpose-name">设置</span>
-        <van-icon name="arrow" class="purpose-right-ico" />
-      </div>
+      <router-link tag="div" to="/logout">
+        <div class="purpose-list">
+          <van-icon name="setting-o" class="purpose-left-ico" />
+          <span class="purpose-name">设置</span>
+          <van-icon name="arrow" class="purpose-right-ico" />
+        </div>
+      </router-link>
     </div>
   </div>
 </template>

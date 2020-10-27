@@ -6,6 +6,7 @@ import store from '../store'
 let WebIM = {};
 WebIM = window.WebIM = websdk;
 WebIM.config = config;
+// console.log("WebIM")
 let conn = {};
 conn = WebIM.conn = new WebIM.connection({
     appKey: WebIM.config.appkey,
@@ -25,24 +26,25 @@ conn = WebIM.conn = new WebIM.connection({
 
 conn.listen({
     onOpened: function () { // 登录成功的监听事件
-
+        
         // 判断localstorage中是否包含userInfo判断本次登录是否是自动登录
-        let userInfo = localStorage.getItem('userInfo')
-
+        let userInfo = JSON.parse(localStorage.getItem("userInfo"))
+        // console.log(userInfo);
         if (userInfo) { //自动登录成功进来的
-            let username = JSON.parse(userInfo).username
-            vm.$store.commit('SET_USERNAME', username)
+            Vue.$store.commit('setUsername', userInfo.username)
+            Vue.$store.commit('setToken', userInfo.token)
         }
-
-        console.log('登录成功')
+        // console.log('登录成功')
 
         // 登录成功后自动跳转至聊天页面
-        vm.$router.push({ path: '/chat' });
+        Vue.$router.push({ path: '/nearby' }).catch((err) => err);;// eslint-disable-line
 
     },         //连接成功回调 
-    onClosed: function (message) { },         //连接关闭回调
-    onTextMessage: function (message) { 
-        store.commit('GET_TEXT_MESSAGE',message)
+    onClosed: function (message) {
+        Vue.$router.push({ path: "/login" });
+    },         //连接关闭回调
+    onTextMessage: function (message) {
+        store.commit('GET_TEXT_MESSAGE', message)
     },    //收到文本消息
     onEmojiMessage: function (message) { },   //收到表情消息
     onPictureMessage: function (message) { }, //收到图片消息
@@ -73,17 +75,17 @@ conn.listen({
     onRoster: function (message) {
         // 这里的 message为什么是一个空数组
         // console.log('有好友申请', message, arguments)
-       
+
     },         //处理好友申请
     onContactInvited: function (msg) {
         console.log('有好友申请', msg)
         store.commit('ADD_CONTACT_INVITED', msg)
     }, // 在线收到好友邀请 
-    onContactAdded: function(){
+    onContactAdded: function () {
         store.dispatch('onRefreshFriendList')
     }, // 增加了联系人时回调此方法
 
-    onContactAgreed: function(){
+    onContactAgreed: function () {
         store.dispatch('onRefreshFriendList')
     }, // 好友请求被同意
 

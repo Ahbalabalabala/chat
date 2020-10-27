@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/home',
+    redirect: '/nearby',
   },
   {
     path: '/home',
@@ -15,7 +15,7 @@ const routes = [
     children: [
       {
         path: '/chat',
-        component: () => import('../components/Chat.vue'),
+        component: () => import('../components/chat/Chat.vue'),
       },
       {
         path: '/broadcast',
@@ -39,6 +39,10 @@ const routes = [
   {
     path: '/login',
     component: () => import('../components/login/Login.vue'),
+  },
+  {
+    path: '/logout',
+    component: () => import('../components/login/Logout.vue'),
   },
   {
     path: '/follow',
