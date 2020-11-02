@@ -124,6 +124,9 @@ export default {
           password: this.password,
           nickname: this.name.toLowerCase(),
         });
+        this.value=""
+        this.password=""
+        this.name=""
       }
       // this.change=false
     },

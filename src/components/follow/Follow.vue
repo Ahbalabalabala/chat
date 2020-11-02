@@ -1,6 +1,6 @@
 <template>
   <div class="follow">
-    <van-nav-bar :left-text="'早上哈'" left-arrow>
+    <van-nav-bar left-text="返回" left-arrow @click-left="back">
       <template #right>
         <van-icon name="user-circle-o" size="20" />
       </template>
@@ -35,6 +35,11 @@ export default {
     // }
   },
   components: {},
+  methods:{
+    back(){
+      this.$router.go(-1)
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

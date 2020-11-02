@@ -42,7 +42,7 @@ router.beforeEach((to, from, next) => {
   // 登录验证
   // 先判断用户是否已经登录
 
-  if(to.path==='/chat'||to.path==='/login'||store.state.login.username){
+  if(to.path==='/login'||store.state.login.username){
     next()
   }else{
     next('/login')

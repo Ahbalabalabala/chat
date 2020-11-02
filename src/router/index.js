@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/chat',
+    redirect: '/login',
   },
   {
     path: '/home',
