@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/nearby',
+    redirect: '/chat',
   },
   {
     path: '/home',
@@ -19,7 +19,7 @@ const routes = [
       },
       {
         path: '/broadcast',
-        component: () => import('../components/Broadcast.vue'),
+        component: () => import('../components/broadcast/Broadcast.vue'),
       },
       {
         path: '/chatRoom',
@@ -43,6 +43,26 @@ const routes = [
   {
     path: '/logout',
     component: () => import('../components/login/Logout.vue'),
+  },
+  {
+    path: '/chatobject/:id',
+    component: () => import('../components/chat/ChatObject.vue'),
+  },
+  {
+    path: '/groupChat/:id',
+    component: () => import('../components/broadcast/GroupChat.vue'),
+  },
+  {
+    path: '/search',
+    component: () => import('../components/Search.vue'),
+  },
+  {
+    path: '/groupsearch',
+    component: () => import('../components/broadcast/GroupSearch.vue'),
+  },
+  {
+    path: '/groupInformation',
+    component: () => import('../components/broadcast/GroupInformation.vue'),
   },
   {
     path: '/follow',

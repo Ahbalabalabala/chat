@@ -2,6 +2,7 @@
 import websdk from "easemob-websdk"
 import config from './WebIM.config'
 import store from '../store'
+import { Dialog } from 'vant'
 
 let WebIM = {};
 WebIM = window.WebIM = websdk;
@@ -26,7 +27,7 @@ conn = WebIM.conn = new WebIM.connection({
 
 conn.listen({
     onOpened: function () { // 登录成功的监听事件
-        
+
         // 判断localstorage中是否包含userInfo判断本次登录是否是自动登录
         let userInfo = JSON.parse(localStorage.getItem("userInfo"))
         // console.log(userInfo);
@@ -37,14 +38,32 @@ conn.listen({
         // console.log('登录成功')
 
         // 登录成功后自动跳转至聊天页面
-        Vue.$router.push({ path: '/nearby' }).catch((err) => err);;// eslint-disable-line
-
+        Vue.$router.push({ path: '/chat' }).catch((err) => err);;// eslint-disable-line
+        store.dispatch('onGetContactUserList')
     },         //连接成功回调 
     onClosed: function (message) {
         Vue.$router.push({ path: "/login" });
     },         //连接关闭回调
     onTextMessage: function (message) {
-        store.commit('GET_TEXT_MESSAGE', message)
+        console.log(message,message.type);
+        switch(message.type){
+            case 'chat':
+                console.log("1");
+                store.commit('textMessageReceived', message)
+                break
+                ;
+            case 'groupchat':
+                console.log("2");
+                store.commit('groupTextMessageReceived', message)
+                break
+                ;
+            case 'chatroom':
+                console.log("3");
+                store.commit('chatroomTextMessageReceived', message)
+                break
+                ;
+        }
+        
     },    //收到文本消息
     onEmojiMessage: function (message) { },   //收到表情消息
     onPictureMessage: function (message) { }, //收到图片消息
@@ -70,23 +89,41 @@ conn.listen({
         WebIM.utils.download.call(conn, option);
     },   //收到视频消息
     onPresence: function (message) {
-        console.log(message)
+        // console.log("有好友申请1",message)
+
     },       //处理“广播”或“发布-订阅”消息，如联系人订阅请求、处理群组、聊天室被踢解散等消息
     onRoster: function (message) {
         // 这里的 message为什么是一个空数组
-        // console.log('有好友申请', message, arguments)
+        // console.log('有好友申请2', message[0].name, arguments)
+
 
     },         //处理好友申请
     onContactInvited: function (msg) {
-        console.log('有好友申请', msg)
-        store.commit('ADD_CONTACT_INVITED', msg)
+
+        console.log('有好友申请3', msg)
+        Dialog.confirm({
+            title: '好友申请',
+            message: `${msg.from}申请加你为好友。`,
+            // theme: 'round-button',
+        })
+            .then(() => {
+                // on confirm
+                // console.log(store._actions.onGetContactUserList);
+                conn.acceptInvitation(msg.from)
+                // store._actions.onGetContactUserList()
+            })
+            .catch(() => {
+                // console.log("2");
+                conn.declineInvitation(msg.from)
+                // on cancel
+            });
     }, // 在线收到好友邀请 
     onContactAdded: function () {
-        store.dispatch('onRefreshFriendList')
+        store.dispatch('onGetContactUserList')
     }, // 增加了联系人时回调此方法
 
     onContactAgreed: function () {
-        store.dispatch('onRefreshFriendList')
+        store.dispatch('onGetContactUserList')
     }, // 好友请求被同意
 
     onInviteMessage: function (message) { },  //处理群组邀请

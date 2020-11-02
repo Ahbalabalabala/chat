@@ -116,7 +116,10 @@ const Login = {
 		}
 	},
 	getters: {
-
+		//获取登录用户
+		getusername(state) {
+			return state.username
+		},
 	}
 };
 export default Login;

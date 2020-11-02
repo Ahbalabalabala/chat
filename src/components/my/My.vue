@@ -2,7 +2,11 @@
   <div class="my">
     <div class="information">
       <div class="portrait">
-        <img src="../../assets/logo.png" alt="" />
+        <van-image
+          lazy-load
+          class="portrait"
+          :src="require('../../assets/logo.png')"
+        />
         <div class="portrait-name">
           <div class="portrait-title">尼酱</div>
           <div class="portrait-ID">ID:111</div>
@@ -18,16 +22,16 @@
         <div>
           <router-link to="/follow/companion" tag="div"> 好友 </router-link>
         </div>
-        <span>0</span>
+        <span>{{ sandContactUserList.length }}</span>
 
         <div>
-          <router-link to="/follow/like" tag="div"> 关注 </router-link>
+          <router-link to="/follow/like" tag="div"> 黑名单 </router-link>
         </div>
         <span>0</span>
         <div>
           <router-link to="/follow/group" tag="div"> 群组 </router-link>
         </div>
-        <span>0</span>
+        <span>{{sandGroupUserList.length}}</span>
         <div>
           <router-link to="/follow/broadcast" tag="div"> 聊天室 </router-link>
         </div>
@@ -47,8 +51,18 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
-  components: {},
+  computed: {
+    ...mapGetters(["sandContactUserList","sandGroupUserList"]),
+  },
+  created() {
+    this.onGetContactUserList();
+    this.onGetGroupUserList();
+  },
+  methods: {
+    ...mapActions(["onGetContactUserList","onGetGroupUserList"]),
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -68,7 +82,7 @@ export default {
     .portrait {
       height: 70px;
       position: relative;
-      img {
+      .portrait {
         width: 70px;
         height: 70px;
         padding: 5px;

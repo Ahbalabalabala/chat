@@ -9,8 +9,8 @@
       <div @click="title = '好友'">
         <router-link to="/follow/companion" tag="div">好友</router-link>
       </div>
-      <div @click="title = '关注'">
-        <router-link to="/follow/like" tag="div">关注</router-link>
+      <div @click="title = '黑名单'">
+        <router-link to="/follow/like" tag="div">黑名单</router-link>
       </div>
       <div @click="title = '群组'">
         <router-link to="/follow/group" tag="div">群组</router-link>

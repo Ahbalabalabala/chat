@@ -1,6 +1,6 @@
-import {Icon,Button,Field,CellGroup,Search,NavBar,Toast} from 'vant'
+import {Icon,Button,Field,CellGroup,Search,NavBar,Toast,Dialog,Notify,Popup,Cell,Image,Lazyload,DropdownMenu, DropdownItem,RadioGroup,Radio} from 'vant'
 
-const vants = [Icon,Button,Field,CellGroup,Search,NavBar,Toast]
+const vants = [Icon,Button,Field,CellGroup,Search,NavBar,Toast,Dialog,Notify,Popup,Cell,Image,Lazyload,DropdownMenu, DropdownItem,RadioGroup,Radio]
 
 export default {
     /**
@@ -12,6 +12,7 @@ export default {
         vants.forEach(Component => {
             Vue.use(Component)
         })
-    }
+    },
+
 
 }

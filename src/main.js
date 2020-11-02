@@ -4,6 +4,10 @@ import router from './router'
 import WebIM from './utils/WebIM'
 import store from './store'
 import vantConfig from './vant.config.js'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios, axios)
+
 Vue.prototype.WebIM = WebIM
 
 // 使用Vue 插件语法将按需引入的Vant组件全局注册到Vue中
@@ -38,7 +42,7 @@ router.beforeEach((to, from, next) => {
   // 登录验证
   // 先判断用户是否已经登录
 
-  if(to.path==='/nearby'||to.path==='/login'||store.state.login.username){
+  if(to.path==='/chat'||to.path==='/login'||store.state.login.username){
     next()
   }else{
     next('/login')

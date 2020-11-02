@@ -9,28 +9,65 @@
       </div>
     </div>
     <div class="friends">
-      <van-search shape="round" background="#fff" placeholder="搜索" />
-      <router-link to="chat/id" tag="div">
-        <div class="friends-list">
-          <div class="friends-portrait">
-            <img src="../../assets/logo.png" alt="" />
-          </div>
-          <div class="friends-information">
-            <div class="friends-name">陌陌</div>
-            <div class="friends-last">你好吗</div>
-          </div>
-          <div class="friends-operation">
-            <van-icon class="operation-ico" color="#ccc" name="weapp-nav" />
-          </div>
-        </div>
+      <router-link to="/search" tag="div">
+        <van-search shape="round" background="#fff" placeholder="搜索" />
       </router-link>
+
+      <div
+        class="friends-list"
+        v-for="itme in sandContactUserList"
+        :key="itme.name"
+        @click="onName(itme.name)"
+      >
+        <div class="friends-portrait" >
+          <router-link :to="`/chatobject/${itme.name}`" tag="div">
+            <van-image lazy-load class="portrait" round :src="require('../../assets/logo.png')" />
+          </router-link>
+        </div>
+        <div class="friends-information" >
+          <router-link :to="`/chatobject/${itme.name}`" tag="div">
+            <div class="friends-name">{{ itme.name }}</div>
+            <div class="friends-last"></div>
+          </router-link>
+        </div>
+        <div class="friends-operation" >
+          <van-icon class="operation-ico" color="#ccc" name="weapp-nav" @click="show=true" />
+          <van-popup v-model="show" round position="bottom" :style="{ height: '30%' }" @click-overlay="show=false" >
+           <div class="malice" @click="deleteFriends">删除好友</div>
+           <!-- <div class="malice">拉入黑名单</div> -->
+            </van-popup>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
-  components: {},
+  data(){
+    return {
+      show:false
+    }
+  },
+  computed: {
+    ...mapGetters(["sandContactUserList", "getTheLastChatRecord"]),
+  },
+  created() {
+    this.onGetContactUserList();
+  },
+  methods: {
+    ...mapActions(["onGetContactUserList", "replaceCurrentObject"]),
+    onName(name) {
+      this.replaceCurrentObject(name);
+    },
+    deleteFriends (){
+      console.log(this.$store.state.chat.currentMsgs);
+      this.WebIM.conn.deleteContact(this.$store.state.chat.currentMsgs);
+      this.show=false;
+      this.onGetContactUserList();
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -83,7 +120,7 @@ export default {
         height: 60px;
         padding: 10px;
         flex: 0 0 60px;
-        img {
+        .portrait {
           width: 100%;
           height: 100%;
           border-radius: 50%;
@@ -112,11 +149,19 @@ export default {
         justify-content: center;
         align-items: center;
         flex: 0 0 60px;
+        .malice{
+          width: 100%;
+          height: 25px;
+          padding: 10px;
+          text-align: center;
+        }
         .operation-ico {
           transform: rotate(90deg);
+          
         }
       }
     }
   }
 }
+
 </style>
